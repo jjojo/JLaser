@@ -1,0 +1,7 @@
+{
+    "javascript.format.enable": true,
+    "standard.usePackageJson": true,
+    "javascript.validate.enable": true,
+    "prettier.singleQuote": true,
+    "prettier.eslintIntegration": true
+}

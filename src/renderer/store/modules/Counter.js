@@ -1,5 +1,10 @@
+
 const state = {
   main: 0
+}
+
+const getters = {
+  main: state => state.main
 }
 
 const mutations = {
@@ -12,14 +17,17 @@ const mutations = {
 }
 
 const actions = {
-  someAsyncTask ({ commit }) {
-    // do something async
+  incrementCounter ({ commit }) {
     commit('INCREMENT_MAIN_COUNTER')
+  },
+  decrementCounter ({ commit }) {
+    commit('DECREMENT_MAIN_COUNTER')
   }
 }
 
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }
