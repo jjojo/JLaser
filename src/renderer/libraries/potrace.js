@@ -78,8 +78,9 @@ export var Potrace = (function () {
   }
 
   Bitmap.prototype.copy = function () {
-    var bm = new Bitmap(this.w, this.h),
-      i
+    var bm = new Bitmap(this.w, this.h)
+
+    var i
     for (i = 0; i < this.size; i++) {
       bm.data[i] = this.data[i]
     }
@@ -108,20 +109,25 @@ export var Potrace = (function () {
     this.beta = new Array(n)
   }
 
-  var imgElement = document.createElement('img'),
-    imgCanvas = document.createElement('canvas'),
-    bm = null,
-    pathlist = [],
-    callback,
-    info = {
-      isReady: false,
-      threshold: 128,
-      turnpolicy: 'minority',
-      turdsize: 2,
-      optcurve: true,
-      alphamax: 1,
-      opttolerance: 0.2
-    }
+  var imgElement = document.createElement('img')
+
+  var imgCanvas = document.createElement('canvas')
+
+  var bm = null
+
+  var pathlist = []
+
+  var callback
+
+  var info = {
+    isReady: false,
+    threshold: 128,
+    turnpolicy: 'minority',
+    turdsize: 2,
+    optcurve: true,
+    alphamax: 1,
+    opttolerance: 0.2
+  }
 
   imgElement.onload = function () {
     loadCanvas()
@@ -169,7 +175,7 @@ export var Potrace = (function () {
     var ctx = imgCanvas.getContext('2d')
     bm = new Bitmap(imgCanvas.width, imgCanvas.height)
     var imgdataobj = ctx.getImageData(0, 0, bm.w, bm.h)
-    var l = imgdataobj.data.length, i, j, color
+    var l = imgdataobj.data.length; var i; var j; var color
     for (i = 0, j = 0; i < l; i += 4, j++) {
       color =
           0.2126 * imgdataobj.data[i] +
@@ -181,9 +187,11 @@ export var Potrace = (function () {
   }
 
   function bmToPathlist () {
-    var bm1 = bm.copy(),
-      currentPoint = new Point(0, 0),
-      path
+    var bm1 = bm.copy()
+
+    var currentPoint = new Point(0, 0)
+
+    var path
 
     function findNext (point) {
       var i = bm1.w * point.y + point.x
@@ -213,12 +221,17 @@ export var Potrace = (function () {
     }
 
     function findPath (point) {
-      var path = new Path(),
-        x = point.x,
-        y = point.y,
-        dirx = 0,
-        diry = 1,
-        tmp
+      var path = new Path()
+
+      var x = point.x
+
+      var y = point.y
+
+      var dirx = 0
+
+      var diry = 1
+
+      var tmp
 
       path.sign = bm.at(point.x, point.y) ? '+' : '-'
 
@@ -269,14 +282,21 @@ export var Potrace = (function () {
     }
 
     function xorPath (path) {
-      var y1 = path.pt[0].y,
-        len = path.len,
-        x,
-        y,
-        maxX,
-        minY,
-        i,
-        j
+      var y1 = path.pt[0].y
+
+      var len = path.len
+
+      var x
+
+      var y
+
+      var maxX
+
+      var minY
+
+      var i
+
+      var j
       for (i = 1; i < len; i++) {
         x = path.pt[i].x
         y = path.pt[i].y
@@ -341,10 +361,13 @@ export var Potrace = (function () {
     }
 
     function quadform (Q, w) {
-      var v = new Array(3),
-        i,
-        j,
-        sum
+      var v = new Array(3)
+
+      var i
+
+      var j
+
+      var sum
 
       v[0] = w.x
       v[1] = w.y
@@ -431,8 +454,9 @@ export var Potrace = (function () {
     }
 
     function bezier (t, p0, p1, p2, p3) {
-      var s = 1 - t,
-        res = new Point()
+      var s = 1 - t
+
+      var res = new Point()
 
       res.x =
           s * s * s * p0.x +
@@ -503,28 +527,44 @@ export var Potrace = (function () {
     }
 
     function calcLon (path) {
-      var n = path.len,
-        pt = path.pt,
-        dir,
-        pivk = new Array(n),
-        nc = new Array(n),
-        ct = new Array(4)
+      var n = path.len
+
+      var pt = path.pt
+
+      var dir
+
+      var pivk = new Array(n)
+
+      var nc = new Array(n)
+
+      var ct = new Array(4)
       path.lon = new Array(n)
 
-      var constraint = [new Point(), new Point()],
-        cur = new Point(),
-        off = new Point(),
-        dk = new Point(),
-        foundk
+      var constraint = [new Point(), new Point()]
 
-      var i,
-        j,
-        k1,
-        a,
-        b,
-        c,
-        d,
-        k = 0
+      var cur = new Point()
+
+      var off = new Point()
+
+      var dk = new Point()
+
+      var foundk
+
+      var i
+
+      var j
+
+      var k1
+
+      var a
+
+      var b
+
+      var c
+
+      var d
+
+      var k = 0
       for (i = n - 1; i >= 0; i--) {
         if (pt[i].x !== pt[k].x && pt[i].y !== pt[k].y) {
           k = i + 1
@@ -626,24 +666,40 @@ export var Potrace = (function () {
 
     function bestPolygon (path) {
       function penalty3 (path, i, j) {
-        var n = path.len,
-          pt = path.pt,
-          sums = path.sums
-        var x,
-          y,
-          xy,
-          x2,
-          y2,
-          k,
-          a,
-          b,
-          c,
-          s,
-          px,
-          py,
-          ex,
-          ey,
-          r = 0
+        var n = path.len
+
+        var pt = path.pt
+
+        var sums = path.sums
+        var x
+
+        var y
+
+        var xy
+
+        var x2
+
+        var y2
+
+        var k
+
+        var a
+
+        var b
+
+        var c
+
+        var s
+
+        var px
+
+        var py
+
+        var ex
+
+        var ey
+
+        var r = 0
         if (j >= n) {
           j -= n
           r = 1
@@ -679,20 +735,33 @@ export var Potrace = (function () {
         return Math.sqrt(s)
       }
 
-      var i,
-        j,
-        m,
-        k,
-        n = path.len,
-        pen = new Array(n + 1),
-        prev = new Array(n + 1),
-        clip0 = new Array(n),
-        clip1 = new Array(n + 1),
-        seg0 = new Array(n + 1),
-        seg1 = new Array(n + 1),
-        thispen,
-        best,
-        c
+      var i
+
+      var j
+
+      var m
+
+      var k
+
+      var n = path.len
+
+      var pen = new Array(n + 1)
+
+      var prev = new Array(n + 1)
+
+      var clip0 = new Array(n)
+
+      var clip1 = new Array(n + 1)
+
+      var seg0 = new Array(n + 1)
+
+      var seg1 = new Array(n + 1)
+
+      var thispen
+
+      var best
+
+      var c
 
       for (i = 0; i < n; i++) {
         c = mod(path.lon[mod(i - 1, n)] - 1, n)
@@ -754,20 +823,33 @@ export var Potrace = (function () {
 
     function adjustVertices (path) {
       function pointslope (path, i, j, ctr, dir) {
-        var n = path.len,
-          sums = path.sums,
-          x,
-          y,
-          x2,
-          xy,
-          y2,
-          k,
-          a,
-          b,
-          c,
-          lambda2,
-          l,
-          r = 0
+        var n = path.len
+
+        var sums = path.sums
+
+        var x
+
+        var y
+
+        var x2
+
+        var xy
+
+        var y2
+
+        var k
+
+        var a
+
+        var b
+
+        var c
+
+        var lambda2
+
+        var l
+
+        var r = 0
 
         while (j >= n) {
           j -= n
@@ -823,22 +905,37 @@ export var Potrace = (function () {
         }
       }
 
-      var m = path.m,
-        po = path.po,
-        n = path.len,
-        pt = path.pt,
-        x0 = path.x0,
-        y0 = path.y0,
-        ctr = new Array(m),
-        dir = new Array(m),
-        q = new Array(m),
-        v = new Array(3),
-        d,
-        i,
-        j,
-        k,
-        l,
-        s = new Point()
+      var m = path.m
+
+      var po = path.po
+
+      var n = path.len
+
+      var pt = path.pt
+
+      var x0 = path.x0
+
+      var y0 = path.y0
+
+      var ctr = new Array(m)
+
+      var dir = new Array(m)
+
+      var q = new Array(m)
+
+      var v = new Array(3)
+
+      var d
+
+      var i
+
+      var j
+
+      var k
+
+      var l
+
+      var s = new Point()
 
       path.curve = new Curve(m)
 
@@ -970,12 +1067,17 @@ export var Potrace = (function () {
     }
 
     function reverse (path) {
-      var curve = path.curve,
-        m = curve.n,
-        v = curve.vertex,
-        i,
-        j,
-        tmp
+      var curve = path.curve
+
+      var m = curve.n
+
+      var v = curve.vertex
+
+      var i
+
+      var j
+
+      var tmp
 
       for (i = 0, j = m - 1; i < j; i++, j--) {
         tmp = v[i]
@@ -985,8 +1087,9 @@ export var Potrace = (function () {
     }
 
     function smooth (path) {
-      var m = path.curve.n,
-        curve = path.curve
+      var m = path.curve.n
+
+      var curve = path.curve
 
       var i, j, k, dd, denom, alpha, p2, p3, p4
 
@@ -1039,32 +1142,57 @@ export var Potrace = (function () {
       }
 
       function opti_penalty (path, i, j, res, opttolerance, convc, areac) {
-        var m = path.curve.n,
-          curve = path.curve,
-          vertex = curve.vertex,
-          k,
-          k1,
-          k2,
-          conv,
-          i1,
-          area,
-          alpha,
-          d,
-          d1,
-          d2,
-          p0,
-          p1,
-          p2,
-          p3,
-          pt,
-          A,
-          R,
-          A1,
-          A2,
-          A3,
-          A4,
-          s,
-          t
+        var m = path.curve.n
+
+        var curve = path.curve
+
+        var vertex = curve.vertex
+
+        var k
+
+        var k1
+
+        var k2
+
+        var conv
+
+        var i1
+
+        var area
+
+        var alpha
+
+        var d
+
+        var d1
+
+        var d2
+
+        var p0
+
+        var p1
+
+        var p2
+
+        var p3
+
+        var pt
+
+        var A
+
+        var R
+
+        var A1
+
+        var A2
+
+        var A3
+
+        var A4
+
+        var s
+
+        var t
 
         if (i === j) {
           return 1
@@ -1193,28 +1321,47 @@ export var Potrace = (function () {
         return 0
       }
 
-      var curve = path.curve,
-        m = curve.n,
-        vert = curve.vertex,
-        pt = new Array(m + 1),
-        pen = new Array(m + 1),
-        len = new Array(m + 1),
-        opt = new Array(m + 1),
-        om,
-        i,
-        j,
-        r,
-        o = new Opti(),
-        p0,
-        i1,
-        area,
-        alpha,
-        ocurve,
-        s,
-        t
+      var curve = path.curve
 
-      var convc = new Array(m),
-        areac = new Array(m + 1)
+      var m = curve.n
+
+      var vert = curve.vertex
+
+      var pt = new Array(m + 1)
+
+      var pen = new Array(m + 1)
+
+      var len = new Array(m + 1)
+
+      var opt = new Array(m + 1)
+
+      var om
+
+      var i
+
+      var j
+
+      var r
+
+      var o = new Opti()
+
+      var p0
+
+      var i1
+
+      var area
+
+      var alpha
+
+      var ocurve
+
+      var s
+
+      var t
+
+      var convc = new Array(m)
+
+      var areac = new Array(m + 1)
 
       for (i = 0; i < m; i++) {
         if (curve.tag[i] === 'CURVE') {
@@ -1340,7 +1487,7 @@ export var Potrace = (function () {
     }
   }
 
-  function process (c) {
+  async function process (c) {
     if (c) {
       callback = c
     }
@@ -1348,8 +1495,8 @@ export var Potrace = (function () {
       setTimeout(process, 100)
       return
     }
-    bmToPathlist()
-    processPath()
+    await bmToPathlist()
+    await processPath()
     callback()
     // callback = null;
   }
@@ -1398,8 +1545,9 @@ export var Potrace = (function () {
         return s
       }
 
-      var n = curve.n,
-        i
+      var n = curve.n
+
+      var i
       var p =
           'M' +
           (curve.c[(n - 1) * 3 + 2].x * size).toFixed(3) +
@@ -1416,16 +1564,14 @@ export var Potrace = (function () {
       // p +=
       return p
     }
-
-    var w = bm.w * size,
-      h = bm.h * size,
-      len = pathlist.length,
-      c,
-      i,
-      strokec,
-      fillc,
-      fillrule
-
+    var w = bm.w * size
+    var h = bm.h * size
+    var len = pathlist.length
+    var c
+    var i
+    var strokec
+    var fillc
+    var fillrule
     var svgMap = {
       id: 'svg',
       version: '1.1',

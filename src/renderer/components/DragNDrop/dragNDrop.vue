@@ -1,19 +1,19 @@
 <template>
     <div
         class="drag-n-drop-area">
-        
+
         <div class="drag-input">
             <input type="file" accept="image/*" v-on:change="handleImageChange">
-                
+
             <div class="camera-img">
               <!-- <Camera /> -->
               Camera Image goes here!
             </div>
             <p>Drag and trop text here!</p>
-            
+
             <!-- TODO: implement "show original image" -->
             <!-- <img v-bind:src="getDataURL"/> -->
-            
+
         </div>
     </div>
 </template>
@@ -25,13 +25,13 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      
-      handleImageChange: ( e ) => {
+
+      handleImageChange: (e) => {
         console.log(e.target.files[0])
         console.log(this.$store)
         Image.actions.setImagePath(this.$store, e.target.files[0].path)
         Image.actions.setRendering(this.$store, true)
-        renderSVG(e.target.files[0], {threshold:128, scale:1.0}, this.setSvgData)
+        renderSVG(e.target.files[0], {threshold: 128, scale: 1.0}, this.setSvgData)
         this.readImageFile(e.target.files[0])
       }
     }
@@ -39,7 +39,7 @@ export default {
   methods: {
     readImageFile (file) {
       console.log(file)
-      let reader = new FileReader();
+      let reader = new FileReader()
       reader.onload = (img) => {
         console.log(img.currentTarget)
         console.log(this.$store)
@@ -47,8 +47,8 @@ export default {
       }
       reader.readAsDataURL(file)
     },
-    setSvgData ( svgData ) {
-      Image.actions.setSvgData( this.$store, svgData )
+    setSvgData (svgData) {
+      Image.actions.setSvgData(this.$store, svgData)
       Image.actions.setRendering(this.$store, false)
     }
   },
@@ -105,4 +105,3 @@ export default {
   }
 }
 </style>
-
